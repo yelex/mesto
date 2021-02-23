@@ -1,0 +1,20 @@
+.card__heart-ico{
+  background-image: url('../../../images/card-heart.svg');
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 19px;
+  border: none;
+  background-color: white;
+  margin: 5px 5px -1px auto;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 0;
+  transition: all .2s linear;
+}
+
+.card__heart-ico:hover{
+  background-image: url('../../../images/card-heart-hover.svg');
+}
+
