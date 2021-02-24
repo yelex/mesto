@@ -12,4 +12,9 @@
   color: #fff;
   display: inline-block;
   box-sizing: border-box;
+  transition: all .3s;
+}
+
+.profile__add-button:hover {
+  opacity: 0.6;
 }

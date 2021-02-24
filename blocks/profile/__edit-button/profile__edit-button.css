@@ -12,4 +12,9 @@
   display: inline-block;
   box-sizing: border-box;
   cursor: pointer;
+  transition: all .3s;
+}
+
+.profile__edit-button:hover {
+  opacity: 0.6;
 }
