@@ -7,4 +7,4 @@
 - JS
 - БЭМ
 
-* [Ссылка на сайт](https://yelex.github.io/mesto/)
+[Ссылка на сайт](https://yelex.github.io/mesto/)
