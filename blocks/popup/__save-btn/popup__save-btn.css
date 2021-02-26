@@ -12,8 +12,18 @@
   background-color: #000;
   color: white;
   font-family: inherit;
+  padding: 0;
 }
 
 .popup__save-btn:hover {
   opacity: 0.8;
+}
+
+@media screen and (max-width: 425px) {
+  .popup__save-btn {
+    margin: 15px auto 25px;
+    font-size: 14px;
+    line-height: 17px;
+    height: 46px;
+  }
 }
