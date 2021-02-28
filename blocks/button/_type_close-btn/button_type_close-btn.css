@@ -1,4 +1,4 @@
-.popup__close-btn{
+.button_type_close-btn{
   position: absolute;
   border: none;
   top: -40px;
@@ -14,12 +14,12 @@
   transition: all .3s;
 }
 
-.popup__close-btn:hover{
+.button_type_close-btn:hover{
   opacity: 0.6;
 }
 
-@media screen and (max-width: 700px) {
-  .popup__close-btn{
+@media screen and (max-width: 425px) {
+  .button_type_close-btn{
     top: calc(-40px - 13.62px);
     right: 0;
     width: 26px;

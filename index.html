@@ -10,7 +10,6 @@
   <div class="page">
     <header class="header">
       <img src="./images/header-logo.svg" alt="Логотип" class="header__logo">
-      <div class="header__line"></div>
     </header>
     <main>
       <section class="profile">
@@ -18,54 +17,56 @@
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button type="button" class="profile__edit-button"></button>
-          <h2 class="profile__job">Исследователь океана</h2>
+          <p class="profile__job">Исследователь океана</p>
         </div>
         <button type="button" class="profile__add-button"></button>
       </section>
 
       <section class="cards">
-        <div class="card">
-          <img src="./images/card-karachevsk.png" alt="Карачевск" class="card__image">
-          <div class="card__text-container">
-            <h3 class="card__title">Карачаевск</h3>
-            <button type="button" class="card__heart-ico"></button>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/card-elbrus.png" alt="Эльбрус" class="card__image">
-          <div class="card__text-container">
-            <h3 class="card__title">Гора Эльбрус</h3>
-            <button type="button" class="card__heart-ico"></button>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/card-dombai.png" alt="Домбай" class="card__image">
-          <div class="card__text-container">
-            <h3 class="card__title">Домбай</h3>
-            <button type="button" class="card__heart-ico"></button>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/card-elbrus.png" alt="Эльбрус" class="card__image">
-          <div class="card__text-container">
-            <h3 class="card__title">Гора Эльбрус</h3>
-            <button type="button" class="card__heart-ico"></button>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/card-dombai.png" alt="Домбай" class="card__image">
-          <div class="card__text-container">
-            <h3 class="card__title">Домбай</h3>
-            <button type="button" class="card__heart-ico"></button>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/card-karachevsk.png" alt="Карачевск" class="card__image">
-          <div class="card__text-container">
-            <h3 class="card__title">Карачаево-Черкессия</h3>
-            <button type="button" class="card__heart-ico"></button>
-          </div>
-        </div>
+        <ul class="cards__list">
+          <li class="card">
+            <img src="./images/card-karachevsk.png" alt="Карачевск" class="card__image">
+            <div class="card__text-container">
+              <h3 class="card__title">Карачаевск</h3>
+              <button type="button" class="card__heart-ico"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/card-elbrus.png" alt="Эльбрус" class="card__image">
+            <div class="card__text-container">
+              <h3 class="card__title">Гора Эльбрус</h3>
+              <button type="button" class="card__heart-ico"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/card-dombai.png" alt="Домбай" class="card__image">
+            <div class="card__text-container">
+              <h3 class="card__title">Домбай</h3>
+              <button type="button" class="card__heart-ico"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/card-elbrus.png" alt="Эльбрус" class="card__image">
+            <div class="card__text-container">
+              <h3 class="card__title">Гора Эльбрус</h3>
+              <button type="button" class="card__heart-ico"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/card-dombai.png" alt="Домбай" class="card__image">
+            <div class="card__text-container">
+              <h3 class="card__title">Домбай</h3>
+              <button type="button" class="card__heart-ico"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/card-karachevsk.png" alt="Карачевск" class="card__image">
+            <div class="card__text-container">
+              <h3 class="card__title">Карачаево-Черкессия</h3>
+              <button type="button" class="card__heart-ico"></button>
+            </div>
+          </li>
+        </ul>
       </section>
     </main>
     <footer class="footer">
@@ -74,7 +75,7 @@
       </p>
     </footer>
     <div class="popup">
-      <form action="#" class="popup__container">
+      <form name="profileForm" action="#" class="popup__container">
         <h3 class="popup__title">
           Редактировать профиль
         </h3>
@@ -86,11 +87,9 @@
             <li>
               <input class="popup__input" type="text" id="job" name="job" placeholder="Исследователь океана">
             </li>
-            <li>
-              <button type="submit" class="popup__save-btn">Сохранить</button>
-            </li>
           </ul>
         </fieldset>
+        <button type="submit" class="popup__save-btn">Сохранить</button>
         <button type="button" class="popup__close-btn"></button>
       </form>
     </div>

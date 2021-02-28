@@ -1,4 +1,4 @@
-.profile__edit-button {
+.button_type_edit-btn {
   background-image: url('../../../images/profile-pencil.svg');
   padding: 0;
   width: 24px;
@@ -15,15 +15,14 @@
   transition: all .3s;
 }
 
-.profile__edit-button:hover {
+.button_type_edit-btn:hover {
   opacity: 0.6;
 }
 
-@media screen and (max-width: 700px){
-  .profile__edit-button {
+@media screen and (max-width: 320px){
+  .button_type_edit-btn {
     width: 18px;
     height: 18px;
-    background-size: 7.5px 7.5px;
     margin: 0 0 0 10px;
   }
 }
