@@ -21,6 +21,7 @@
 @import url('../blocks/card/__text-container/card__text-container.css');
 @import url('../blocks/card/__title/card__title.css');
 @import url('../blocks/card/__heart-ico/_active/card__heart-ico_active.css');
+@import url('../blocks/card/__trash-ico/cards__trash-ico.css');
 
 @import url('../blocks/footer/footer.css');
 @import url('../blocks/footer/__copyright/footer__copyright.css');

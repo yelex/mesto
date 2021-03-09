@@ -113,6 +113,14 @@ const initialCards = [
   }
 ];
 
+function toggleLikeIcoCard(evt){
+  evt.target.classList.toggle('card__heart-ico_active');
+}
+
+function removeCard(evt){
+  evt.target.closest('.card').remove();
+}
+
 function initializeCards(initialCards){
   const cardList = document.querySelector('.cards__list');
   while (cardList.firstChild) {
@@ -123,6 +131,8 @@ function initializeCards(initialCards){
   initialCards.forEach(item => {
     const card = cardTemplate.querySelector('.card').cloneNode(true);
 
+    card.querySelector('.card__heart-ico').addEventListener('click', toggleLikeIcoCard);
+    card.querySelector('.card__trash-ico').addEventListener('click', removeCard);
     card.querySelector('.card__image').src = item.link;
     card.querySelector('.card__image').alt = item.name;
     card.querySelector('.card__title').textContent = item.name;
@@ -134,11 +144,8 @@ function initializeCards(initialCards){
 
 initializeCards(initialCards);
 
-function toggleLikeIcoCard(evt){
-  evt.target.classList.toggle('card__heart-ico_active');
-}
-const cardLikes = document.querySelectorAll('.card__heart-ico');
-cardLikes.forEach(item => {
-  item.addEventListener('click', toggleLikeIcoCard)
-})
+
+
+
+
 
