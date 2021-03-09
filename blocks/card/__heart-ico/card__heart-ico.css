@@ -16,6 +16,6 @@
 }
 
 .card__heart-ico:hover{
-  background-image: url('../../../images/card-heart-hover.svg');
+  opacity: 0.5;
 }
 

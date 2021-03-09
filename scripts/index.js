@@ -134,3 +134,11 @@ function initializeCards(initialCards){
 
 initializeCards(initialCards);
 
+function toggleLikeIcoCard(evt){
+  evt.target.classList.toggle('card__heart-ico_active');
+}
+const cardLikes = document.querySelectorAll('.card__heart-ico');
+cardLikes.forEach(item => {
+  item.addEventListener('click', toggleLikeIcoCard)
+})
+
