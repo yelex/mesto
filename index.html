@@ -48,25 +48,36 @@
     </li>
   </template>
 
-  <template id="popup">
+  <template id="popupForm">
     <div class="popup">
       <form name="profileForm" action="#" class="popup__container">
         <h3 class="popup__title">
-          Редактировать профиль
         </h3>
         <fieldset class="popup__fieldset">
           <ul class="popup__list-fields">
             <li>
-              <input class="popup__input popup__input_first" type="text" id="name" name="name" placeholder="Жак-Ив Кусто">
+              <input class="popup__input popup__input_first">
             </li>
             <li>
-              <input class="popup__input popup__input_last" type="text" id="job" name="job" placeholder="Исследователь океана">
+              <input class="popup__input popup__input_last">
             </li>
           </ul>
         </fieldset>
-        <button type="submit" class="popup__submit-btn">Сохранить</button>
+        <button type="submit" class="popup__submit-btn"></button>
         <button type="button" class="popup__close-btn"></button>
       </form>
+    </div>
+  </template>
+
+  <template id="popupImage">
+    <div class="popup popup_image">
+      <div class="popup__container-image">
+        <figure class="popup__figure">
+          <img class="popup__image">
+          <figcaption class="popup__caption"></figcaption>
+        </figure>
+        <button type="button" class="popup__close-btn"></button>
+      </div>
     </div>
   </template>
 

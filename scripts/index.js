@@ -5,12 +5,12 @@ const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
 function closePopupHandler (evt) {
-  document.querySelector('.popup').remove();
+  evt.target.closest('.popup').remove();
 }
 
-function openPopupHandler (evt) {
+function openPopupFormHandler (evt) {
 
-  const popupTemplate = document.querySelector('#popup').content;
+  const popupTemplate = document.querySelector('#popupForm').content;
   const popup = popupTemplate.querySelector('.popup').cloneNode(true);
 
   const popupForm = popup.querySelector('.popup__container');
@@ -58,6 +58,7 @@ function openPopupHandler (evt) {
   popupForm.addEventListener('submit', formSubmitHandler);
 
   document.querySelector('.page').append(popup);
+  document.querySelector('.popup').classList.add('popup_opened');
 }
 
 function formSubmitHandler (evt) {
@@ -76,13 +77,11 @@ function formSubmitHandler (evt) {
     initialCards.unshift(newCard);
     initializeCards(initialCards);
   }
-
-  // popup.classList.remove('popup_opened');
   closePopupHandler();
 }
 
-profileEditBtn.addEventListener('click', openPopupHandler);
-cardAddBtn.addEventListener('click', openPopupHandler);
+profileEditBtn.addEventListener('click', openPopupFormHandler);
+cardAddBtn.addEventListener('click', openPopupFormHandler);
 
 // cards initialize
 
@@ -133,8 +132,10 @@ function initializeCards(initialCards){
 
     card.querySelector('.card__heart-ico').addEventListener('click', toggleLikeIcoCard);
     card.querySelector('.card__trash-ico').addEventListener('click', removeCard);
+
     card.querySelector('.card__image').src = item.link;
     card.querySelector('.card__image').alt = item.name;
+    card.querySelector('.card__image').addEventListener('click', openPopupImageHandler);
     card.querySelector('.card__title').textContent = item.name;
 
   // отображаем на странице
@@ -143,6 +144,24 @@ function initializeCards(initialCards){
 }
 
 initializeCards(initialCards);
+
+function openPopupImageHandler (evt) {
+  console.log(evt.target);
+  const popupTemplate = document.querySelector('#popupImage').content;
+  const popup = popupTemplate.querySelector('.popup').cloneNode(true);
+
+  const popupImage = popup.querySelector('.popup__image');
+  const popupCaption = popup.querySelector('.popup__caption');
+  const popupCloseBtn = popup.querySelector('.popup__close-btn');
+
+  popupImage.src = evt.target.src;
+  popupImage.alt = evt.target.alt;
+  popupCaption.textContent = evt.target.alt;
+  popupCloseBtn.addEventListener('click', closePopupHandler);
+
+  document.querySelector('.page').append(popup);
+  document.querySelector('.popup').classList.add('popup_opened');
+}
 
 
 
