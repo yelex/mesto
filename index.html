@@ -24,7 +24,7 @@
 
       <section class="cards">
         <ul class="cards__list">
-          
+
         </ul>
       </section>
     </main>
@@ -33,25 +33,7 @@
         &copy; 2021 Mesto Russia
       </p>
     </footer>
-    <div class="popup">
-      <form name="profileForm" action="#" class="popup__container">
-        <h3 class="popup__title">
-          Редактировать профиль
-        </h3>
-        <fieldset class="popup__fieldset">
-          <ul class="popup__list-fields">
-            <li>
-              <input class="popup__input" type="text" id="name" name="name" placeholder="Жак-Ив Кусто">
-            </li>
-            <li>
-              <input class="popup__input" type="text" id="job" name="job" placeholder="Исследователь океана">
-            </li>
-          </ul>
-        </fieldset>
-        <button type="submit" class="popup__save-btn">Сохранить</button>
-        <button type="button" class="popup__close-btn"></button>
-      </form>
-    </div>
+
   </div>
 
   <template id="card">
@@ -62,6 +44,28 @@
         <button type="button" class="card__heart-ico"></button>
       </div>
     </li>
+  </template>
+
+  <template id="popup">
+    <div class="popup">
+      <form name="profileForm" action="#" class="popup__container">
+        <h3 class="popup__title">
+          Редактировать профиль
+        </h3>
+        <fieldset class="popup__fieldset">
+          <ul class="popup__list-fields">
+            <li>
+              <input class="popup__input popup__input_first" type="text" id="name" name="name" placeholder="Жак-Ив Кусто">
+            </li>
+            <li>
+              <input class="popup__input popup__input_last" type="text" id="job" name="job" placeholder="Исследователь океана">
+            </li>
+          </ul>
+        </fieldset>
+        <button type="submit" class="popup__submit-btn">Сохранить</button>
+        <button type="button" class="popup__close-btn"></button>
+      </form>
+    </div>
   </template>
 
   <script src='./scripts/index.js'>

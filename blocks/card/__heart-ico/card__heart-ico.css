@@ -12,6 +12,7 @@
   font-size: 16px;
   padding: 0;
   transition: all .2s linear;
+  cursor: pointer;
 }
 
 .card__heart-ico:hover{
