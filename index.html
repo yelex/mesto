@@ -33,21 +33,39 @@
         &copy; 2021 Mesto Russia
       </p>
     </footer>
+
     <div class="popup">
       <form name="profileForm" action="#" class="popup__container">
-        <h3 class="popup__title">
-        </h3>
+        <h3 class="popup__title">Редактировать профиль</h3>
         <fieldset class="popup__fieldset">
           <ul class="popup__list-fields">
             <li>
-              <input class="popup__input popup__input_first">
+              <input class="popup__input" id="name" name="name" type="text" placeholder="Жак-Ив Кусто">
             </li>
             <li>
-              <input class="popup__input popup__input_last">
+              <input class="popup__input" id="job" name="job" type="text" placeholder="Исследователь океана">
             </li>
           </ul>
         </fieldset>
-        <button type="submit" class="popup__submit-btn"></button>
+        <button type="submit" class="popup__submit-btn">Сохранить</button>
+        <button type="button" class="popup__close-btn"></button>
+      </form>
+    </div>
+
+    <div class="popup">
+      <form name="cardForm" action="#" class="popup__container">
+        <h3 class="popup__title">Новое место</h3>
+        <fieldset class="popup__fieldset">
+          <ul class="popup__list-fields">
+            <li>
+              <input class="popup__input" id="title" name="title" placeholder="Название" type="text">
+            </li>
+            <li>
+              <input class="popup__input" id="link" name="link" placeholder="Ссылка на картинку" type="url">
+            </li>
+          </ul>
+        </fieldset>
+        <button type="submit" class="popup__submit-btn">Создать</button>
         <button type="button" class="popup__close-btn"></button>
       </form>
     </div>
