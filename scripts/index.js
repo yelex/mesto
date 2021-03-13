@@ -84,12 +84,12 @@ function addFirstChild (parent, elementToInsert){
 function addNewCard(title, link, listCards, cardTemplate){
 
   const card = cardTemplate.querySelector('.card').cloneNode(true);
-  card.querySelector('.card__heart-ico').addEventListener('click', evt => evt.target.classList.toggle('card__heart-ico_active'));
-  // FIXME: создать функцию для удаления карточки
-  card.querySelector('.card__trash-ico').addEventListener('click', evt => evt.target.closest('.card').remove());
+  const cardImage = card.querySelector('.card__image');
+  cardImage.src = link;
+  cardImage.alt = title;
 
-  card.querySelector('.card__image').src = link;
-  card.querySelector('.card__image').alt = title;
+  card.querySelector('.card__heart-ico').addEventListener('click', evt => evt.target.classList.toggle('card__heart-ico_active'));
+  card.querySelector('.card__trash-ico').addEventListener('click', evt => evt.target.closest('.card').remove());
   card.querySelector('.card__title').textContent = title;
 
   function openPopupImageHandler () {
