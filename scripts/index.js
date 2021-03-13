@@ -83,24 +83,29 @@ function addFirstChild (parent, elementToInsert){
 
 function addNewCard(title, link, listCards, cardTemplate){
 
-  const card = cardTemplate.querySelector('.card').cloneNode(true);
-  const cardImage = card.querySelector('.card__image');
-  cardImage.src = link;
-  cardImage.alt = title;
+  function createCard(){
+    const card = cardTemplate.querySelector('.card').cloneNode(true);
+    const cardImage = card.querySelector('.card__image');
+    cardImage.src = link;
+    cardImage.alt = title;
 
-  card.querySelector('.card__heart-ico').addEventListener('click', evt => evt.target.classList.toggle('card__heart-ico_active'));
-  card.querySelector('.card__trash-ico').addEventListener('click', evt => evt.target.closest('.card').remove());
-  card.querySelector('.card__title').textContent = title;
+    card.querySelector('.card__heart-ico').addEventListener('click', evt => evt.target.classList.toggle('card__heart-ico_active'));
+    card.querySelector('.card__trash-ico').addEventListener('click', evt => evt.target.closest('.card').remove());
+    card.querySelector('.card__title').textContent = title;
 
-  function openPopupImageHandler () {
-    popupImageFigure.src = item.link;
-    popupImageFigure.alt = item.name;
+    function openPopupImageHandler () {
+      popupImageFigure.src = item.link;
+      popupImageFigure.alt = item.name;
 
-    textContentSet(popupCaption, item.name);
-    openPopupHandler(popupImage);
+      textContentSet(popupCaption, item.name);
+      openPopupHandler(popupImage);
+    }
+
+    card.querySelector('.card__image').addEventListener('click', openPopupImageHandler);
+    return card
   }
 
-  card.querySelector('.card__image').addEventListener('click', openPopupImageHandler);
+  const card = createCard();
 
   addFirstChild(listCards, card);
 }
