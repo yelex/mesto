@@ -2,6 +2,7 @@
   list-style: none;
   padding: 51px 0 0;
   max-width: 880px;
+  min-height: 370px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -22,6 +23,7 @@
   .cards__list {
     margin: 36px auto 0;
     max-width: 282px;
+    min-height: 370px;
     grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
   }
 }
