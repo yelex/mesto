@@ -81,31 +81,33 @@ function addFirstChild (parent, elementToInsert){
   parent.insertBefore(elementToInsert, theFirstChild);
 }
 
+function openPopupImageHandler (title, link) {
+  popupImageFigure.src = link;
+  popupImageFigure.alt = title;
+
+  textContentSet(popupCaption, title);
+  openPopupHandler(popupImage);
+}
+
+function createCard(title, link, cardTemplate){
+  const card = cardTemplate.querySelector('.card').cloneNode(true);
+  const cardImage = card.querySelector('.card__image');
+  cardImage.src = link;
+  cardImage.alt = title;
+
+  card.querySelector('.card__heart-ico').addEventListener('click', evt => evt.target.classList.toggle('card__heart-ico_active'));
+  card.querySelector('.card__trash-ico').addEventListener('click', evt => evt.target.closest('.card').remove());
+  card.querySelector('.card__title').textContent = title;
+
+  card.querySelector('.card__image').addEventListener('click', function(){
+    openPopupImageHandler(title, link);
+  });
+  return card
+}
+
 function addNewCard(title, link, listCards, cardTemplate){
 
-  function createCard(){
-    const card = cardTemplate.querySelector('.card').cloneNode(true);
-    const cardImage = card.querySelector('.card__image');
-    cardImage.src = link;
-    cardImage.alt = title;
-
-    card.querySelector('.card__heart-ico').addEventListener('click', evt => evt.target.classList.toggle('card__heart-ico_active'));
-    card.querySelector('.card__trash-ico').addEventListener('click', evt => evt.target.closest('.card').remove());
-    card.querySelector('.card__title').textContent = title;
-
-    function openPopupImageHandler () {
-      popupImageFigure.src = item.link;
-      popupImageFigure.alt = item.name;
-
-      textContentSet(popupCaption, item.name);
-      openPopupHandler(popupImage);
-    }
-
-    card.querySelector('.card__image').addEventListener('click', openPopupImageHandler);
-    return card
-  }
-
-  const card = createCard();
+  const card = createCard(title, link, cardTemplate);
 
   addFirstChild(listCards, card);
 }
