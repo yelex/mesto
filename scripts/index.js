@@ -150,7 +150,7 @@ document.addEventListener('keydown', function (evt) {
   };
 })
 
-popupCard.addEventListener('keydown', function (evt) {
+popupCard.addEventListener('click', function (evt) {
   if (evt.target.classList.contains('popup_opened')) {
     closePopupHandler(popupCard, popupCardForm);
   }
