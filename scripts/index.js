@@ -16,10 +16,7 @@ popupProfileName.value = profileName.textContent;
 popupProfileJob.value = profileJob.textContent;
 
 const popupCloseBtnCard = popupCard.querySelector('.popup__close-btn');
-const popupSubmitBtnCard = popupCard.querySelector('.popup__submit-btn');
-
 const popupCloseBtnProfile = popupProfile.querySelector('.popup__close-btn');
-const popupSubmitBtnProfile = popupProfile.querySelector('.popup__submit-btn');
 
 const popupImage = document.querySelector('.popup_image');
 
@@ -134,6 +131,18 @@ cardAddBtn.addEventListener('click', function(){
 
 popupCloseBtnCard.addEventListener('click', function(){
   closePopupHandler(popupCard, popupCardForm);
+});
+
+popupCard.addEventListener('click', function(evt){
+  if (evt.target.classList.contains('popup_opened')) {
+    closePopupHandler(popupCard, popupCardForm);
+  }
+});
+
+popupProfile.addEventListener('click', function(evt){
+  if (evt.target.classList.contains('popup_opened')) {
+    closePopupHandler(popupProfile, popupProfileForm);
+  }
 });
 
 popupCloseBtnProfile.addEventListener('click', function(){
