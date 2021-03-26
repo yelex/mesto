@@ -60,10 +60,12 @@
         <fieldset class="popup__fieldset">
           <ul class="popup__list-fields">
             <li class="popup__list-item">
-              <input class="popup__input" id="title" name="title" placeholder="Название" type="text">
+              <input class="popup__input" id="title" name="title" placeholder="Название" type="text" minlength="2" maxlength="30" required>
+              <span class="popup__error title-input-error"></span>
             </li>
             <li class="popup__list-item">
-              <input class="popup__input" id="link" name="link" placeholder="Ссылка на картинку" type="url">
+              <input class="popup__input" id="link" name="link" placeholder="Ссылка на картинку" type="url" required>
+              <span class="popup__error link-input-error"></span>
             </li>
           </ul>
           <button type="submit" class="popup__submit-btn">Создать</button>
