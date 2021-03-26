@@ -39,16 +39,18 @@
         <h3 class="popup__title">Редактировать профиль</h3>
         <fieldset class="popup__fieldset">
           <ul class="popup__list-fields">
-            <li>
-              <input class="popup__input" id="name" name="name" type="text" placeholder="Жак-Ив Кусто">
+            <li class="popup__list-item">
+              <input class="popup__input" id="name" name="name" type="text" placeholder="Жак-Ив Кусто" minlength="2" maxlength="40" required>
+              <span class="popup__error name-input-error"></span>
             </li>
-            <li>
-              <input class="popup__input" id="job" name="job" type="text" placeholder="Исследователь океана">
+            <li class="popup__list-item">
+              <input class="popup__input" id="job" name="job" type="text" placeholder="Исследователь океана" minlength="2" maxlength="200" required>
+              <span class="popup__error job-input-error"></span>
             </li>
           </ul>
+          <button type="submit" class="popup__submit-btn">Сохранить</button>
+          <button type="button" class="popup__close-btn"></button>
         </fieldset>
-        <button type="submit" class="popup__submit-btn">Сохранить</button>
-        <button type="button" class="popup__close-btn"></button>
       </form>
     </div>
 
@@ -57,16 +59,16 @@
         <h3 class="popup__title">Новое место</h3>
         <fieldset class="popup__fieldset">
           <ul class="popup__list-fields">
-            <li>
+            <li class="popup__list-item">
               <input class="popup__input" id="title" name="title" placeholder="Название" type="text">
             </li>
-            <li>
+            <li class="popup__list-item">
               <input class="popup__input" id="link" name="link" placeholder="Ссылка на картинку" type="url">
             </li>
           </ul>
+          <button type="submit" class="popup__submit-btn">Создать</button>
+          <button type="button" class="popup__close-btn"></button>
         </fieldset>
-        <button type="submit" class="popup__submit-btn">Создать</button>
-        <button type="button" class="popup__close-btn"></button>
       </form>
     </div>
 
@@ -93,8 +95,9 @@
       <button type="button" class="card__trash-ico"></button>
     </li>
   </template>
-
   <script src='./scripts/index.js'>
+  </script>
+  <script src='./scripts/validate.js'>
   </script>
 </body>
 

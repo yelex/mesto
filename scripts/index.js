@@ -12,6 +12,8 @@ const popupProfile = document.querySelector('.popup_profile');
 const popupProfileForm = document.querySelector('form[name="profileForm"]');
 const popupProfileName = popupProfileForm.querySelector('#name');
 const popupProfileJob = popupProfileForm.querySelector('#job');
+popupProfileName.value = profileName.textContent;
+popupProfileJob.value = profileJob.textContent;
 
 const popupCloseBtnCard = popupCard.querySelector('.popup__close-btn');
 const popupSubmitBtnCard = popupCard.querySelector('.popup__submit-btn');
