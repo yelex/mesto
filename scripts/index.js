@@ -139,6 +139,23 @@ popupCard.addEventListener('click', function(evt){
   }
 });
 
+document.addEventListener('keydown', function (evt) {
+  if (evt.key=='Escape'){
+    if (popupProfile.classList.contains('popup_opened')) {
+      closePopupHandler(popupProfile, popupProfileForm);
+    }
+    if (popupCard.classList.contains('popup_opened')) {
+      closePopupHandler(popupCard, popupCardForm);
+    }
+  };
+})
+
+popupCard.addEventListener('keydown', function (evt) {
+  if (evt.target.classList.contains('popup_opened')) {
+    closePopupHandler(popupCard, popupCardForm);
+  }
+});
+
 popupProfile.addEventListener('click', function(evt){
   if (evt.target.classList.contains('popup_opened')) {
     closePopupHandler(popupProfile, popupProfileForm);
