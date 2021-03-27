@@ -133,12 +133,6 @@ popupCloseBtnCard.addEventListener('click', function(){
   closePopupHandler(popupCard, popupCardForm);
 });
 
-popupCard.addEventListener('click', function(evt){
-  if (evt.target.classList.contains('popup_opened')) {
-    closePopupHandler(popupCard, popupCardForm);
-  }
-});
-
 document.addEventListener('keydown', function (evt) {
   if (evt.key=='Escape'){
     if (popupProfile.classList.contains('popup_opened')) {
@@ -146,6 +140,9 @@ document.addEventListener('keydown', function (evt) {
     }
     if (popupCard.classList.contains('popup_opened')) {
       closePopupHandler(popupCard, popupCardForm);
+    }
+    if (popupImage.classList.contains('popup_opened')) {
+      closePopupHandler(popupImage);
     }
   };
 })
@@ -159,6 +156,12 @@ popupCard.addEventListener('click', function (evt) {
 popupProfile.addEventListener('click', function(evt){
   if (evt.target.classList.contains('popup_opened')) {
     closePopupHandler(popupProfile, popupProfileForm);
+  }
+});
+
+popupImage.addEventListener('click', function(evt){
+  if (evt.target.classList.contains('popup_opened')) {
+    closePopupHandler(popupImage);
   }
 });
 
