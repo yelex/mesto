@@ -65,7 +65,7 @@ function openPopupHandler(popup){
   popup.classList.add('popup_opened');
 }
 
-function textContentSet(elemRecipient, elemDonorValue){
+function setTextContent(elemRecipient, elemDonorValue){
   elemRecipient.textContent = elemDonorValue;
 }
 
@@ -84,7 +84,7 @@ function openPopupImageHandler (title, link) {
   popupImageFigure.src = link;
   popupImageFigure.alt = title;
 
-  textContentSet(popupCaption, title);
+  setTextContent(popupCaption, title);
   openPopupHandler(popupImage);
 }
 
@@ -181,8 +181,8 @@ popupCardForm.addEventListener('submit', function(evt){
 
 popupProfileForm.addEventListener('submit', function(evt){
   evt.preventDefault();
-  textContentSet(profileName, popupProfileName.value);
-  textContentSet(profileJob, popupProfileJob.value);
+  setTextContent(profileName, popupProfileName.value);
+  setTextContent(profileJob, popupProfileJob.value);
   closePopupHandler(popupProfile, popupProfileForm);
 });
 
