@@ -41,17 +41,17 @@ const checkInputValidity = (formElement, inputElement, {inputErrorClass, errorCl
   }
 };
 
-const setEventListeners = (fieldset, {inputSelector, submitButtonSelector,
+const setEventListeners = (formElement, {inputSelector, submitButtonSelector,
   inactiveButtonClass, ...rest}) => {
   // Найдём все поля формы и сделаем из них массив
 
-  const inputElements = Array.from(fieldset.querySelectorAll(inputSelector));
-  const buttonElement = fieldset.querySelector(submitButtonSelector);
+  const inputElements = Array.from(formElement.querySelectorAll(inputSelector));
+  const buttonElement = formElement.querySelector(submitButtonSelector);
 
   toggleButtonState(inputElements, buttonElement, inactiveButtonClass);
   inputElements.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-      checkInputValidity(fieldset, inputElement, {...rest});
+      checkInputValidity(formElement, inputElement, {...rest});
       toggleButtonState(inputElements, buttonElement, inactiveButtonClass);
     });
   });
@@ -60,16 +60,11 @@ const setEventListeners = (fieldset, {inputSelector, submitButtonSelector,
 const enableValidation = ({formSelector, fieldsetSelector, ...rest}) => {
   const formElements = Array.from(document.querySelectorAll(formSelector));
   formElements.forEach((formElement) => {
-
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
 
     });
-    const fieldsets = Array.from(formElement.querySelectorAll(fieldsetSelector));
-    fieldsets.forEach(fieldset => {
-      setEventListeners(fieldset, {...rest});
-    });
-
+    setEventListeners(formElement, {...rest});
   });
 };
 
@@ -81,5 +76,4 @@ enableValidation({
   inactiveButtonClass: 'popup__submit-btn_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible',
-  fieldsetSelector: '.popup__fieldset',
 });
