@@ -1,3 +1,5 @@
+import Card from "./Card.js";
+
 const profileEditBtn = document.querySelector('.profile__edit-button');
 const cardAddBtn = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__name');
@@ -26,7 +28,7 @@ const popupCaption = popupImage.querySelector('.popup__caption');
 const popupCloseBtnImage = popupImage.querySelector('.popup__close-btn');
 
 const cardList = document.querySelector('.cards__list');
-const cardTemplate = document.querySelector('#card').content;
+const cardTemplateSelector = '#card';
 
 const ESC_KEY = 'Escape';
 
@@ -84,42 +86,36 @@ function addFirstChild (parent, elementToInsert){
   parent.prepend(elementToInsert);
 }
 
-function openPopupImageHandler (title, link) {
-  popupImageFigure.src = link;
-  popupImageFigure.alt = title;
+function openPopupImageHandler (data) {
+  popupImageFigure.src = data.link;
+  popupImageFigure.alt = data.name;
 
-  setTextContent(popupCaption, title);
+  setTextContent(popupCaption, data.name);
   openPopupHandler(popupImage);
 }
 
-function createCard(title, link, cardTemplate){
-  const card = cardTemplate.querySelector('.card').cloneNode(true);
-  const cardImage = card.querySelector('.card__image');
-  cardImage.src = link;
-  cardImage.alt = title;
-
-  card.querySelector('.card__heart-ico').addEventListener('click', evt => evt.target.classList.toggle('card__heart-ico_active'));
-  card.querySelector('.card__trash-ico').addEventListener('click', evt => evt.target.closest('.card').remove());
-  card.querySelector('.card__title').textContent = title;
-
-  card.querySelector('.card__image').addEventListener('click', function(){
-    openPopupImageHandler(title, link);
+//убрать createCard (дублирование с Card.js)
+function createCard(data, cardTemplateSelector){
+  const card = new Card(data, cardTemplateSelector);
+  const cardElement = card.generateCard();
+  cardElement.querySelector('.card__image').addEventListener('click', function(){
+    openPopupImageHandler(data);
   });
-  return card
+  return cardElement
 }
 
-function addNewCard(title, link, listCards, cardTemplate){
-  const card = createCard(title, link, cardTemplate);
+function addNewCard(data, listCards, cardTemplateSelector){
+  const card = createCard(data, cardTemplateSelector);
   addFirstChild(listCards, card);
 }
 
-function initializeCards(initialCards, listCards, cardTemplate){
+function initializeCards(initialCards, listCards, cardTemplateSelector){
   initialCards.forEach(item => {
-    addNewCard(item.name, item.link, listCards, cardTemplate);
+    addNewCard(item, listCards, cardTemplateSelector);
   })
 }
 
-initializeCards(initialCards, cardList, cardTemplate);
+initializeCards(initialCards, cardList, cardTemplateSelector);
 
 profileEditBtn.addEventListener('click', function(){
   openPopupHandler(popupProfile);
@@ -153,7 +149,10 @@ popupImage.addEventListener('click', function(evt){
 
 popupCardForm.addEventListener('submit', function(evt){
   evt.preventDefault();
-  addNewCard(popupCardTitle.value, popupCardLink.value, cardList, cardTemplate);
+  const newCardData = {};
+  newCardData.name = popupCardTitle.value;
+  newCardData.link = popupCardLink.value;
+  addNewCard(newCardData, cardList, cardTemplateSelector);
   closePopupHandler(popupCard);
 });
 
