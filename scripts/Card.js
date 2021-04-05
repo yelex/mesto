@@ -1,3 +1,4 @@
+import { openPopupImageHandler } from "./utils.js"
 export default class Card {
   constructor(data, templateSelector) {
     this._name = data.name;
@@ -27,6 +28,10 @@ export default class Card {
     this._element.querySelector('.card__trash-ico').addEventListener('click', () => {
       this._handleRemoveClick();
     })
+
+    this._element.querySelector('.card__image').addEventListener('click', () => {
+      openPopupImageHandler(this._name, this._link);
+    });
   }
 
   generateCard() {

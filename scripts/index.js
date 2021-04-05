@@ -1,13 +1,13 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import { openPopupHandler, closePopupHandler, setTextContent, popupImage, popupCard, popupCardForm } from "./utils.js";
 
 const profileEditBtn = document.querySelector('.profile__edit-button');
 const cardAddBtn = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
-const popupCard = document.querySelector('.popup_card');
-const popupCardForm = document.querySelector('form[name="cardForm"]');
+
 const popupCardTitle = popupCardForm.querySelector('#title');
 const popupCardLink = popupCardForm.querySelector('#link');
 const popupCardSubmitBtn = popupCardForm.querySelector('.popup__submit-btn');
@@ -19,19 +19,8 @@ const popupProfileJob = popupProfileForm.querySelector('#job');
 popupProfileName.value = profileName.textContent;
 popupProfileJob.value = profileJob.textContent;
 
-const popupCloseBtnCard = popupCard.querySelector('.popup__close-btn');
-const popupCloseBtnProfile = popupProfile.querySelector('.popup__close-btn');
-
-const popupImage = document.querySelector('.popup_image');
-
-const popupImageFigure = popupImage.querySelector('.popup__image');
-const popupCaption = popupImage.querySelector('.popup__caption');
-const popupCloseBtnImage = popupImage.querySelector('.popup__close-btn');
-
 const cardList = document.querySelector('.cards__list');
 const cardTemplateSelector = '#card';
-
-const ESC_KEY = 'Escape';
 
 const initialCards = [
   {
@@ -74,48 +63,13 @@ formElements.forEach(formElement => {
   formValidator.enableValidation();
 })
 
-function closeEscListener(evt){
-  if (evt.key===ESC_KEY){
-    closePopupHandler(document.querySelector('.popup_opened'));
-  }
-}
-
-function closePopupHandler(popup){
-  popup.classList.remove('popup_opened');
-  if (popup===popupCard){
-    popupCardForm.reset();
-  }
-  document.removeEventListener('keydown', closeEscListener);
-}
-
-function openPopupHandler(popup){
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closeEscListener);
-}
-
-function setTextContent(elemRecipient, elemDonorValue){
-  elemRecipient.textContent = elemDonorValue;
-}
-
 function addFirstChild (parent, elementToInsert){
   parent.prepend(elementToInsert);
 }
 
-function openPopupImageHandler (data) {
-  popupImageFigure.src = data.link;
-  popupImageFigure.alt = data.name;
-
-  setTextContent(popupCaption, data.name);
-  openPopupHandler(popupImage);
-}
-
-//убрать createCard (дублирование с Card.js)
 function createCard(data, cardTemplateSelector){
   const card = new Card(data, cardTemplateSelector);
   const cardElement = card.generateCard();
-  cardElement.querySelector('.card__image').addEventListener('click', function(){
-    openPopupImageHandler(data);
-  });
   return cardElement
 }
 
