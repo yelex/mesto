@@ -1,4 +1,5 @@
 import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
 
 const profileEditBtn = document.querySelector('.profile__edit-button');
 const cardAddBtn = document.querySelector('.profile__add-button');
@@ -58,6 +59,20 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+const formElements = document.querySelectorAll('.popup__container');
+const formSettings = {
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit-btn',
+  inactiveButtonClass: 'popup__submit-btn_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+
+formElements.forEach(formElement => {
+  const formValidator = new FormValidator(formSettings, formElement);
+  formValidator.enableValidation();
+})
 
 function closeEscListener(evt){
   if (evt.key===ESC_KEY){
