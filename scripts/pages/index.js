@@ -2,61 +2,8 @@ import Card from "../Card.js";
 import FormValidator from "../components/FormValidator.js";
 import { openPopupHandler, closePopupHandler, setTextContent, popupImage, popupCard, popupCardForm } from "../utils/utils.js";
 
-const profileEditBtn = document.querySelector('.profile__edit-button');
-const cardAddBtn = document.querySelector('.profile__add-button');
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__job');
-
-
-const popupCardTitle = popupCardForm.querySelector('#title');
-const popupCardLink = popupCardForm.querySelector('#link');
-const popupCardSubmitBtn = popupCardForm.querySelector('.popup__submit-btn');
-
-const popupProfile = document.querySelector('.popup_profile');
-const popupProfileForm = document.querySelector('form[name="profileForm"]');
-const popupProfileName = popupProfileForm.querySelector('#name');
-const popupProfileJob = popupProfileForm.querySelector('#job');
 popupProfileName.value = profileName.textContent;
 popupProfileJob.value = profileJob.textContent;
-
-const cardList = document.querySelector('.cards__list');
-const cardTemplateSelector = '#card';
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-const formElements = document.querySelectorAll('.popup__container');
-const formSettings = {
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit-btn',
-  inactiveButtonClass: 'popup__submit-btn_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-}
 
 formElements.forEach(formElement => {
   const formValidator = new FormValidator(formSettings, formElement);
