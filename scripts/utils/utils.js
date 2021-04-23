@@ -38,4 +38,4 @@ function openPopupImageHandler (name, link) {
   openPopupHandler(popupImage);
 }
 
-export { openPopupHandler, openPopupImageHandler, closePopupHandler, setTextContent, popupCard, popupCardForm, popupImage }
+export { popupImageFigure, popupCaption, openPopupHandler, openPopupImageHandler, closePopupHandler, setTextContent, popupCard, popupCardForm, popupImage }
