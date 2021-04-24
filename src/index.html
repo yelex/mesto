@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 <body>
   <div class="page">
     <header class="header">
-      <img src="./images/header-logo.svg" alt="Логотип" class="header__logo">
+      <img src="<%=require('./images/header-logo.svg')%>" alt="Логотип" class="header__logo">
     </header>
     <main>
       <section class="profile">
-        <img src="./images/profile-avatar.png" alt="Жак-Ив Кусто" class="profile__avatar">
+        <img src="<%=require('./images/profile-avatar.png')%>" alt="Жак-Ив Кусто" class="profile__avatar">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button type="button" class="profile__edit-button"></button>
@@ -97,26 +96,6 @@
       <button type="button" class="card__trash-ico"></button>
     </li>
   </template>
-  <script src='./scripts/utils/constants.js' type="module">
-  </script>
-  <script src='./scripts/utils/utils.js' type="module">
-  </script>
-  <script src='./scripts/components/Card.js' type="module">
-  </script>
-  <script src='./scripts/components/FormValidator.js' type="module">
-  </script>
-  <script src='./scripts/components/Popup.js' type="module">
-  </script>
-  <script src='./scripts/components/PopupWithForm.js' type="module">
-  </script>
-  <script src='./scripts/components/PopupWithImage.js' type="module">
-  </script>
-  <script src='./scripts/components/Section.js' type="module">
-  </script>
-  <script src='./scripts/components/UserInfo.js' type="module">
-  </script>
-  <script src='./scripts/pages/index.js' type="module">
-  </script>
 
 </body>
 
