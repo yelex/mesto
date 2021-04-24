@@ -36,7 +36,7 @@ const addCardToCardList = ({ name, link }, cardList) =>{
 const formListSection = new Section({
   items: formElements,
   renderer: (item) => {
-    const formValidator = new FormValidator(formSettings, item); // попробовать поменять на FormElement
+    const formValidator = new FormValidator(formSettings, item);
     formValidator.enableValidation();
     },
   }
@@ -66,7 +66,7 @@ const popupWithFormProfile = new PopupWithForm(
 
 const popupWithFormCard = new PopupWithForm(
   {popupSelector: popupCardSelector,
-    handleFormSubmit: ({ name, link }) => { // !!! ЭТО ПОВТОРЕНИЕ! УБРАТЬ
+    handleFormSubmit: ({ name, link }) => {
       addCardToCardList({ name,link }, cardList);
       popupWithFormCard.close();
     }
