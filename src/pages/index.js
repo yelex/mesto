@@ -17,13 +17,10 @@ import { profileEditBtn, popupCardSubmitBtn, cardAddBtn,
 import UserInfo from "../components/UserInfo.js";
 
 
-popupProfileName.value = profileName.textContent;
-popupProfileJob.value = profileJob.textContent;
-
-const addCardToCardList = ({ name, link }, cardList) =>{
+const addCardToCardList = ({ title, link }, cardList) =>{
   const card = new Card(
-    { name, link, handleCardClick: () => {
-      popupWithImage.open({name, link})
+    { title, link, handleCardClick: () => {
+      popupWithImage.open({title, link})
     }
     },
     cardTemplateSelector,
@@ -48,6 +45,8 @@ const userInfo = new UserInfo({
   userJobSelector: userJobSelector
 })
 
+userInfo.setUserInfo({ name: profileName.textContent, job: profileJob.textContent})
+
 const popupWithImage = new PopupWithImage(
   {popupSelector: popupImageSelector,
     imageSelector: imageSelector,
@@ -66,8 +65,8 @@ const popupWithFormProfile = new PopupWithForm(
 
 const popupWithFormCard = new PopupWithForm(
   {popupSelector: popupCardSelector,
-    handleFormSubmit: ({ name, link }) => {
-      addCardToCardList({ name,link }, cardList);
+    handleFormSubmit: ({ title, link }) => {
+      addCardToCardList({ title,link }, cardList);
       popupWithFormCard.close();
     }
   }
@@ -78,8 +77,8 @@ popupWithFormCard.setEventListeners();
 
 const cardList = new Section({
   items: initialCards,
-  renderer: ({ name, link }) => {
-    addCardToCardList({ name,link }, cardList);
+  renderer: ({ title, link }) => {
+    addCardToCardList({ title, link }, cardList);
   }},
   cardListSelector
 );
