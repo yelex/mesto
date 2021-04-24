@@ -12,8 +12,8 @@ export default class UserInfo {
     return { userName, userJob }
   }
 
-  setUserInfo({ userName, userJob }) {
-    setTextContent(this._userNameElement, userName);
-    setTextContent(this._userJobElement, userJob);
+  setUserInfo({ name, job }) {
+    setTextContent(this._userNameElement, name);
+    setTextContent(this._userJobElement, job);
   }
 }

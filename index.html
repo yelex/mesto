@@ -60,8 +60,8 @@
         <fieldset class="popup__fieldset">
           <ul class="popup__list-fields">
             <li class="popup__list-item">
-              <input class="popup__input" id="title" name="title" placeholder="Название" type="text" minlength="2" maxlength="30" required>
-              <span class="popup__error title-input-error"></span>
+              <input class="popup__input" id="name" name="name" placeholder="Название" type="text" minlength="2" maxlength="30" required>
+              <span class="popup__error name-input-error"></span>
             </li>
             <li class="popup__list-item">
               <input class="popup__input" id="link" name="link" placeholder="Ссылка на картинку" type="url" required>
@@ -97,13 +97,25 @@
       <button type="button" class="card__trash-ico"></button>
     </li>
   </template>
-  <script src='./scripts/Card.js' type="module">
+  <script src='./scripts/utils/constants.js' type="module">
   </script>
-  <script src='./scripts/FormValidator.js' type="module">
+  <script src='./scripts/utils/utils.js' type="module">
   </script>
-  <script src='./scripts/utils.js' type="module">
+  <script src='./scripts/components/Card.js' type="module">
   </script>
-  <script src='./scripts/index.js' type="module">
+  <script src='./scripts/components/FormValidator.js' type="module">
+  </script>
+  <script src='./scripts/components/Popup.js' type="module">
+  </script>
+  <script src='./scripts/components/PopupWithForm.js' type="module">
+  </script>
+  <script src='./scripts/components/PopupWithImage.js' type="module">
+  </script>
+  <script src='./scripts/components/Section.js' type="module">
+  </script>
+  <script src='./scripts/components/UserInfo.js' type="module">
+  </script>
+  <script src='./scripts/pages/index.js' type="module">
   </script>
 
 </body>

@@ -1,4 +1,13 @@
-export const popupImage = document.querySelector('.popup_image');
+export const popupImageSelector = '.popup_image';
+export const imageSelector = '.popup__image';
+export const popupProfileSelector = '.popup_profile';
+export const popupCardSelector = '.popup_card';
+export const captionSelector = '.popup__caption';
+
+export const userNameSelector = '.profile__name';
+export const userJobSelector = '.profile__job';
+
+export const popupImage = document.querySelector(popupImageSelector);
 
 export const popupCard = document.querySelector('.popup_card');
 export const popupCardForm = document.querySelector('form[name="cardForm"]');
@@ -12,17 +21,15 @@ export const cardAddBtn = document.querySelector('.profile__add-button');
 export const profileName = document.querySelector('.profile__name');
 export const profileJob = document.querySelector('.profile__job');
 
-
 export const popupCardTitle = popupCardForm.querySelector('#title');
 export const popupCardLink = popupCardForm.querySelector('#link');
 export const popupCardSubmitBtn = popupCardForm.querySelector('.popup__submit-btn');
 
-export const popupProfile = document.querySelector('.popup_profile');
 export const popupProfileForm = document.querySelector('form[name="profileForm"]');
 export const popupProfileName = popupProfileForm.querySelector('#name');
 export const popupProfileJob = popupProfileForm.querySelector('#job');
 
-export const cardList = document.querySelector('.cards__list');
+export const cardListSelector = '.cards__list';
 export const cardTemplateSelector = '#card';
 
 export const initialCards = [

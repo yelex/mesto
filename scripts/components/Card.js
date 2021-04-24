@@ -1,6 +1,5 @@
-import { openPopupImageHandler } from "./utils.js"
 export default class Card {
-  constructor({ name, link }, templateSelector, handleCardClick) {
+  constructor({ name, link, handleCardClick }, templateSelector) {
     this._name = name;
     this._link = link;
     this._templateSelector = templateSelector;
@@ -21,16 +20,16 @@ export default class Card {
     this._element.closest('.card').remove();
   }
 
+  _setHandleCardClick(evt) {
+    this._handleCardClick();
+  }
+
   _setEventListeners() {
-    this._element.querySelector('.card__heart-ico').addEventListener('click', () => {
-      this._handleLikeClick();
-    })
+    this._element.querySelector('.card__heart-ico').addEventListener('click', this._handleLikeClick.bind(this))
 
-    this._element.querySelector('.card__trash-ico').addEventListener('click', () => {
-      this._handleRemoveClick();
-    })
+    this._element.querySelector('.card__trash-ico').addEventListener('click', this._handleRemoveClick.bind(this))
 
-    this._element.querySelector('.card__image').addEventListener('click', this._handleCardClick().bind(this));
+    this._element.querySelector('.card__image').addEventListener('click', this._setHandleCardClick.bind(this));
   }
 
   generateCard() {
