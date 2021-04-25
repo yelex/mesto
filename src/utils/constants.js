@@ -52,7 +52,12 @@ export const initialCards = [
   }
 ];
 
-export const formElements = document.querySelectorAll('.popup__container');
+const formElements = document.querySelectorAll('.popup__container');
+export const formElementsObj = {};
+formElements.forEach(formElement => {
+  formElementsObj[formElement.getAttribute('name')] = formElement;
+})
+// console.log(formElementsObj.cardForm);
 export const formSettings = {
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__submit-btn',

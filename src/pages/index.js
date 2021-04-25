@@ -11,7 +11,7 @@ import { profileEditBtn, popupCardSubmitBtn, cardAddBtn,
   captionSelector, imageSelector, popupImageSelector,
   popupProfileSelector, popupCardSelector, profileName,
   popupProfileName, profileJob, popupProfileJob,
-  formElements, formSettings, initialCards,
+  formElementsObj, formSettings, initialCards,
   cardTemplateSelector }
   from "../utils/constants.js";
 import UserInfo from "../components/UserInfo.js";
@@ -30,15 +30,10 @@ const addCardToCardList = ({ title, link }, cardList) =>{
 }
 
 // подключаем валидацию для всех форм
-const formListSection = new Section({
-  items: formElements,
-  renderer: (item) => {
-    const formValidator = new FormValidator(formSettings, item);
-    formValidator.enableValidation();
-    },
-  }
-);
-formListSection.renderItems()
+const addCardFormValidator = new FormValidator(formSettings, formElementsObj.cardForm);
+const editProfileFormValidator = new FormValidator(formSettings, formElementsObj.profileForm);
+addCardFormValidator.enableValidation();
+editProfileFormValidator.enableValidation();
 
 const userInfo = new UserInfo({
   userNameSelector: userNameSelector,
@@ -59,6 +54,11 @@ const popupWithFormProfile = new PopupWithForm(
     handleFormSubmit: ({ name, job }) => {
       userInfo.setUserInfo({ name, job });
       popupWithFormProfile.close();
+    },
+    handleFormClose: () => {
+      editProfileFormValidator.inputElements.forEach(inputElement => {
+        editProfileFormValidator.hideInputError(inputElement);
+      })
     }
   }
 )
