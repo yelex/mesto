@@ -13,7 +13,7 @@ export default class Card {
   }
 
   _handleLikeClick() {
-    this._element.querySelector('.card__heart-ico').classList.toggle('card__heart-ico_active');
+    this._heartIco.classList.toggle('card__heart-ico_active');
   }
 
   _handleRemoveClick() {
@@ -25,15 +25,20 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector('.card__heart-ico').addEventListener('click', this._handleLikeClick.bind(this))
+    this._heartIco.addEventListener('click', this._handleLikeClick.bind(this))
 
     this._element.querySelector('.card__trash-ico').addEventListener('click', this._handleRemoveClick.bind(this))
 
     this._element.querySelector('.card__image').addEventListener('click', this._setHandleCardClick.bind(this));
   }
 
+  _setHeartIco() {
+    this._heartIco = this._element.querySelector('.card__heart-ico');
+  }
+
   generateCard() {
     this._element = this._getTemplate();
+    this._setHeartIco();
     this._setEventListeners();
 
     this._element.querySelector('.card__title').textContent = this._title;
