@@ -14,7 +14,7 @@ export default class FormValidator {
     })
   }
 
-  _toggleButtonState() {
+  toggleButtonState() {
     // Если есть хотя бы один невалидный инпут
     if (this._hasInvalidInput()) {
       this._buttonElement.disabled = true;
@@ -51,11 +51,11 @@ export default class FormValidator {
     this.inputElements = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
 
-    this._toggleButtonState();
+    this.toggleButtonState();
     this.inputElements.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState();
+        this.toggleButtonState();
       });
     });
   }

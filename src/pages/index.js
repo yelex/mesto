@@ -55,10 +55,11 @@ const popupWithFormProfile = new PopupWithForm(
       userInfo.setUserInfo({ name, job });
       popupWithFormProfile.close();
     },
-    handleFormClose: () => {
+    handleFormOpen: () => {
       editProfileFormValidator.inputElements.forEach(inputElement => {
         editProfileFormValidator.hideInputError(inputElement);
       })
+      editProfileFormValidator.toggleButtonState();
     }
   }
 )
@@ -68,6 +69,12 @@ const popupWithFormCard = new PopupWithForm(
     handleFormSubmit: ({ title, link }) => {
       addCardToCardList({ title,link }, cardList);
       popupWithFormCard.close();
+    },
+    handleFormOpen: () => {
+      addCardFormValidator.inputElements.forEach(inputElement => {
+        addCardFormValidator.hideInputError(inputElement);
+      })
+      addCardFormValidator.toggleButtonState();
     }
   }
 )
@@ -85,14 +92,14 @@ const cardList = new Section({
 cardList.renderItems()
 
 profileEditBtn.addEventListener('click', function(){
-  popupWithFormProfile.open();
   const { userName, userJob } = userInfo.getUserInfo();
   popupProfileName.value = userName;
   popupProfileJob.value = userJob;
+  popupWithFormProfile.open();
 });
 
 cardAddBtn.addEventListener('click', function(){
-  popupWithFormCard.open();
   popupCardSubmitBtn.disabled = true;
   popupCardSubmitBtn.classList.add('popup__submit-btn_disabled');
+  popupWithFormCard.open();
 });
