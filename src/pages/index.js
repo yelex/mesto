@@ -17,7 +17,7 @@ import { profileEditBtn, popupCardSubmitBtn, cardAddBtn,
 import UserInfo from "../components/UserInfo.js";
 
 
-const addCardToCardList = ({ title, link }, cardList) =>{
+const createCard = ({ title, link }) => {
   const card = new Card(
     { title, link, handleCardClick: () => {
       popupWithImage.open({title, link})
@@ -26,6 +26,9 @@ const addCardToCardList = ({ title, link }, cardList) =>{
     cardTemplateSelector,
     );
   const cardElement = card.generateCard();
+  return cardElement
+}
+const addCardToCardList = (cardElement, cardList) =>{
   cardList.addItem(cardElement);
 }
 
@@ -67,7 +70,8 @@ const popupWithFormProfile = new PopupWithForm(
 const popupWithFormCard = new PopupWithForm(
   {popupSelector: popupCardSelector,
     handleFormSubmit: ({ title, link }) => {
-      addCardToCardList({ title,link }, cardList);
+      const newCard = createCard({title, link});
+      addCardToCardList(newCard, cardList);
       popupWithFormCard.close();
     },
     handleFormOpen: () => {
@@ -85,7 +89,8 @@ popupWithFormCard.setEventListeners();
 const cardList = new Section({
   items: initialCards,
   renderer: ({ title, link }) => {
-    addCardToCardList({ title, link }, cardList);
+    const newCard = createCard({title, link});
+    addCardToCardList(newCard, cardList);
   }},
   cardListSelector
 );
