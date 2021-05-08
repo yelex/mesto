@@ -1,6 +1,7 @@
 // подключение главного CSS-файла (для Webpack)
 import './index.css';
 
+import Api from "../components/Api.js";
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
 import FormValidator from "../components/FormValidator.js";
@@ -16,6 +17,15 @@ import { profileEditBtn, popupCardSubmitBtn, cardAddBtn,
   from "../utils/constants.js";
 import UserInfo from "../components/UserInfo.js";
 
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-23',
+  headers: {
+    authorization: '58d9bd2a-6b34-4d93-8ca3-98d968550c4e',
+    'Content-Type': 'application/json'
+  }
+});
+
+api.getAllInitialData().then(args => console.log(args))
 
 const createCard = ({ title, link }) => {
   const card = new Card(
