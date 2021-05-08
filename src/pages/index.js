@@ -17,6 +17,19 @@ import { profileEditBtn, popupCardSubmitBtn, cardAddBtn,
   from "../utils/constants.js";
 import UserInfo from "../components/UserInfo.js";
 
+const cardList = new Section({
+  renderer: ({ name, link }) => {
+    const newCard = createCard({title: name, link});
+    addCardToCardList(newCard, cardList);
+  }},
+  cardListSelector
+);
+
+const userInfo = new UserInfo({
+  userNameSelector: userNameSelector,
+  userJobSelector: userJobSelector
+})
+
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-23',
   headers: {
@@ -25,7 +38,12 @@ const api = new Api({
   }
 });
 
-api.getAllInitialData().then(args => console.log(args))
+api.getAllInitialData().then(args => {
+  const [ cards, profileInfo ] = args;
+  cardList.setItems(cards);
+  cardList.renderItems();
+  userInfo.setUserInfo({ name: profileInfo.name, job: profileInfo.about});
+})
 
 const createCard = ({ title, link }) => {
   const card = new Card(
@@ -47,13 +65,6 @@ const addCardFormValidator = new FormValidator(formSettings, formElementsObj.car
 const editProfileFormValidator = new FormValidator(formSettings, formElementsObj.profileForm);
 addCardFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();
-
-const userInfo = new UserInfo({
-  userNameSelector: userNameSelector,
-  userJobSelector: userJobSelector
-})
-
-userInfo.setUserInfo({ name: profileName.textContent, job: profileJob.textContent})
 
 const popupWithImage = new PopupWithImage(
   {popupSelector: popupImageSelector,
@@ -95,16 +106,6 @@ const popupWithFormCard = new PopupWithForm(
 popupWithImage.setEventListeners();
 popupWithFormProfile.setEventListeners();
 popupWithFormCard.setEventListeners();
-
-const cardList = new Section({
-  items: initialCards,
-  renderer: ({ title, link }) => {
-    const newCard = createCard({title, link});
-    addCardToCardList(newCard, cardList);
-  }},
-  cardListSelector
-);
-cardList.renderItems()
 
 profileEditBtn.addEventListener('click', function(){
   const { userName, userJob } = userInfo.getUserInfo();
