@@ -28,6 +28,24 @@ export default class Api {
       });
   }
 
+  setInfoAboutMe({ name, about }) {
+
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        about: about
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка при обновлении данных профиля: ${res.status}`)
+      });
+  }
+
   getAllInitialData() {
     return Promise.all([this.getInitialCardsFromApi(), this.getInfoAboutMeApi()])
   }

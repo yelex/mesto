@@ -17,6 +17,22 @@ import { profileEditBtn, popupCardSubmitBtn, cardAddBtn,
   from "../utils/constants.js";
 import UserInfo from "../components/UserInfo.js";
 
+const createCard = ({ title, link }) => {
+  const card = new Card(
+    { title, link, handleCardClick: () => {
+      popupWithImage.open({title, link})
+    }
+    },
+    cardTemplateSelector,
+    );
+  const cardElement = card.generateCard();
+  return cardElement
+}
+
+const addCardToCardList = (cardElement, cardList) =>{
+  cardList.addItem(cardElement);
+}
+
 const cardList = new Section({
   renderer: ({ name, link }) => {
     const newCard = createCard({title: name, link});
@@ -45,21 +61,6 @@ api.getAllInitialData().then(args => {
   userInfo.setUserInfo({ name: profileInfo.name, job: profileInfo.about});
 })
 
-const createCard = ({ title, link }) => {
-  const card = new Card(
-    { title, link, handleCardClick: () => {
-      popupWithImage.open({title, link})
-    }
-    },
-    cardTemplateSelector,
-    );
-  const cardElement = card.generateCard();
-  return cardElement
-}
-const addCardToCardList = (cardElement, cardList) =>{
-  cardList.addItem(cardElement);
-}
-
 // подключаем валидацию для всех форм
 const addCardFormValidator = new FormValidator(formSettings, formElementsObj.cardForm);
 const editProfileFormValidator = new FormValidator(formSettings, formElementsObj.profileForm);
@@ -76,8 +77,13 @@ const popupWithImage = new PopupWithImage(
 const popupWithFormProfile = new PopupWithForm(
   {popupSelector: popupProfileSelector,
     handleFormSubmit: ({ name, job }) => {
-      userInfo.setUserInfo({ name, job });
-      popupWithFormProfile.close();
+      api.setInfoAboutMe({ name: name, about: job })
+      .then(res => {
+        userInfo.setUserInfo({ name: res.name, job: res.about });
+      })
+      .then(_ => {
+        popupWithFormProfile.close();
+      })
     },
     handleFormOpen: () => {
       editProfileFormValidator.inputElements.forEach(inputElement => {
