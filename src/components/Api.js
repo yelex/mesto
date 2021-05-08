@@ -66,5 +66,22 @@ export default class Api {
         return Promise.reject(`Ошибка при редактировании профиля: ${res.status}`)
       });
   }
+
+  addNewCardApi({ title, link }) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: title,
+        link: link
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка при добавлении новой карточки: ${res.status}`)
+      });
+  }
   // другие методы работы с API
 }

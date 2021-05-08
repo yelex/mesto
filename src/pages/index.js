@@ -80,8 +80,6 @@ const popupWithFormProfile = new PopupWithForm(
       api.setInfoAboutMe({ name: name, about: job })
       .then(res => {
         userInfo.setUserInfo({ name: res.name, job: res.about });
-      })
-      .then(_ => {
         popupWithFormProfile.close();
       })
     },
@@ -97,10 +95,16 @@ const popupWithFormProfile = new PopupWithForm(
 const popupWithFormCard = new PopupWithForm(
   {popupSelector: popupCardSelector,
     handleFormSubmit: ({ title, link }) => {
-      const newCard = createCard({title, link});
-      addCardToCardList(newCard, cardList);
-      popupWithFormCard.close();
-    },
+      api.addNewCardApi({ title, link })
+      .then(_ => {
+        return api.getInitialCardsFromApi()
+      })
+        .then(cards => {
+          cardList.setItems(cards);
+          cardList.renderItems();
+          popupWithFormCard.close();
+        })
+      },
     handleFormOpen: () => {
       addCardFormValidator.inputElements.forEach(inputElement => {
         addCardFormValidator.hideInputError(inputElement);
