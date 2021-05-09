@@ -7,18 +7,19 @@ import Section from "../components/Section.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithFormSubmit from "../components/PopupWithFormSubmit.js";
 import { profileEditBtn, popupCardSubmitBtn, cardAddBtn,
   userJobSelector, userNameSelector, cardListSelector,
   captionSelector, imageSelector, popupImageSelector,
   popupProfileSelector, popupCardSelector, profileName,
   popupProfileName, profileJob, popupProfileJob,
   formElementsObj, formSettings, initialCards,
-  cardTemplateSelector }
+  cardTemplateSelector, popupDeleteSelector }
   from "../utils/constants.js";
 import UserInfo from "../components/UserInfo.js";
 import { getIds } from "../utils/utils.js";
 
-const createCard = ({ title, link, id, likeUserIds }) => {
+const createCard = ({ title, link, id, likeUserIds, isMyCard }) => {
 
   const card = new Card(
     { title, link, id, likeUserIds,
@@ -40,7 +41,24 @@ const createCard = ({ title, link, id, likeUserIds }) => {
           const likeUserIds = getIds(likes);
           card.setLikeStatus(likeUserIds);
         })
-    }
+    },
+      handleRemoveClick: () => {
+        popupWithFormDelete.setSubmitAction(()=>{
+          api.removeCardApi(card.id)
+          .then(_ => {
+            return api.getInitialCardsFromApi()
+          })
+          .then(cards => {
+            cardList.setItems(cards);
+            cardList.renderItems();
+          }).then(_ => {popupWithFormDelete.close()})
+          .catch(err => console.error(err))
+
+        })
+        popupWithFormDelete.open();
+        popupWithFormDelete.setEventListeners();
+      },
+      isMyCard
     },
     cardTemplateSelector,
     );
@@ -53,9 +71,10 @@ const addCardToCardList = (cardElement, cardList) =>{
 }
 
 const cardList = new Section({
-  renderer: ({ name, link, _id, likes }) => {
+  renderer: ({ name, link, _id, likes, owner }) => {
     const likeUserIds = getIds(likes);
-    const newCard = createCard({title: name, link, id: _id, likeUserIds});
+    const isMyCard = owner._id === userInfo.userId ? true : false
+    const newCard = createCard({title: name, link, id: _id, likeUserIds, isMyCard});
     addCardToCardList(newCard, cardList);
   }},
   cardListSelector
@@ -95,7 +114,7 @@ const popupWithImage = new PopupWithImage(
   }
 )
 
-const popupWithFormProfile = new PopupWithForm(
+const popupWithFormProfile = new PopupWithForm (
   {popupSelector: popupProfileSelector,
     handleFormSubmit: ({ name, job }) => {
       api.setInfoAboutMe({ name: name, about: job })
@@ -111,6 +130,10 @@ const popupWithFormProfile = new PopupWithForm(
       editProfileFormValidator.toggleButtonState();
     }
   }
+)
+
+const popupWithFormDelete = new PopupWithFormSubmit(
+  { popupSelector: popupDeleteSelector }
 )
 
 const popupWithFormCard = new PopupWithForm(

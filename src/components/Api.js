@@ -89,6 +89,20 @@ export default class Api {
       .catch(err => console.log(err))
   }
 
+  removeCardApi(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка при удалении карточки: ${res.status}`)
+      })
+      .catch(err => console.log(err))
+  }
+
   addLikeToCardApi(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',

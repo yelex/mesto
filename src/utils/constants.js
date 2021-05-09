@@ -2,6 +2,7 @@ export const popupImageSelector = '.popup_image';
 export const imageSelector = '.popup__image';
 export const popupProfileSelector = '.popup_profile';
 export const popupCardSelector = '.popup_card';
+export const popupDeleteSelector = '.popup_delete';
 export const captionSelector = '.popup__caption';
 
 export const userNameSelector = '.profile__name';

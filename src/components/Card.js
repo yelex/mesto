@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({ title, link, id, likeUserIds, handleCardClick, setColorHeart, handleLikeClick }, templateSelector) {
+  constructor({ title, link, id, likeUserIds, handleCardClick, setColorHeart, handleLikeClick, handleRemoveClick, isMyCard }, templateSelector) {
     this._title = title;
     this._link = link;
     this.id = id;
@@ -8,16 +8,14 @@ export default class Card {
     this.setColorHeart = setColorHeart;
     this.likeUserIds = likeUserIds;
     this._handleLikeClick = handleLikeClick;
+    this._handleRemoveClick = handleRemoveClick;
+    this._isMyCard = isMyCard;
   }
 
   _getTemplate() {
     const card = document.querySelector(this._templateSelector);
     const cardElement = card.content.querySelector('.card').cloneNode(true);
     return cardElement
-  }
-
-  _handleRemoveClick() {
-    this._element.closest('.card').remove();
   }
 
   _setHandleCardClick(evt) {
@@ -27,7 +25,9 @@ export default class Card {
   _setEventListeners() {
     this._heartIco.addEventListener('click', this._handleLikeClick.bind(this))
 
-    this._element.querySelector('.card__trash-ico').addEventListener('click', this._handleRemoveClick.bind(this))
+    if (this._element.querySelector('.card__trash-ico')) {
+      this._element.querySelector('.card__trash-ico').addEventListener('click', this._handleRemoveClick.bind(this))
+    }
 
     this._element.querySelector('.card__image').addEventListener('click', this._setHandleCardClick.bind(this));
   }
@@ -58,6 +58,9 @@ export default class Card {
     this._likeNumberElement = this._element.querySelector('.card__heart-counter');
     this.setLikeStatus(this.likeUserIds);
     this._element.querySelector('.card__title').textContent = this._title;
+    if (!this._isMyCard){
+      this._element.querySelector('.card__trash-ico').remove();
+    }
     const cardImage = this._element.querySelector('.card__image');
     cardImage.src = this._link;
     cardImage.alt = this._title;
