@@ -117,6 +117,23 @@ export default class Api {
       .catch(err => console.log(err))
   }
 
+  addAvatarToApi(avatarLink) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatarLink
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка при добавлении аватара: ${res.status}`)
+      })
+      .catch(err => console.log(err))
+  }
+
   removeLikeToCardApi(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',

@@ -1,15 +1,18 @@
 export const popupImageSelector = '.popup_image';
 export const imageSelector = '.popup__image';
 export const popupProfileSelector = '.popup_profile';
+export const popupAvatarSelector = '.popup_avatar';
 export const popupCardSelector = '.popup_card';
 export const popupDeleteSelector = '.popup_delete';
 export const captionSelector = '.popup__caption';
 
 export const userNameSelector = '.profile__name';
 export const userJobSelector = '.profile__job';
-
+export const popupAvatarBtn = document.querySelector(".profile__avatar-container");;
 const popupCardForm = document.querySelector('form[name="cardForm"]');
-
+const popupAvatarForm = document.querySelector('form[name="avatarForm"]');
+const popupDeleteForm = document.querySelector('form[name="deleteForm"]');
+export const avatarImgElement = document.querySelector(".profile__avatar")
 export const ESC_KEY = 'Escape';
 
 export const profileEditBtn = document.querySelector('.profile__edit-button');
@@ -18,10 +21,13 @@ export const profileName = document.querySelector('.profile__name');
 export const profileJob = document.querySelector('.profile__job');
 
 export const popupCardSubmitBtn = popupCardForm.querySelector('.popup__submit-btn');
+export const popupAvatarSubmitBtn = popupAvatarForm.querySelector('.popup__submit-btn');
+export const popupDeleteSubmitBtn = popupDeleteForm.querySelector('.popup__submit-btn');
 
 const popupProfileForm = document.querySelector('form[name="profileForm"]');
 export const popupProfileName = popupProfileForm.querySelector('#name');
 export const popupProfileJob = popupProfileForm.querySelector('#job');
+export const popupProfileSubmitBtn = popupProfileForm.querySelector('.popup__submit-btn');
 
 export const cardListSelector = '.cards__list';
 export const cardTemplateSelector = '#card';

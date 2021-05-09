@@ -55,6 +55,22 @@
       </form>
     </div>
 
+    <div class="popup popup_avatar">
+      <form name="avatarForm" action="#" class="popup__container">
+        <h3 class="popup__title">Обновить аватар</h3>
+        <fieldset class="popup__fieldset">
+          <ul class="popup__list-fields">
+            <li class="popup__list-item">
+              <input class="popup__input" id="linkAvatar" name="linkAvatar" placeholder="Ссылка на картинку" type="url" required>
+              <span class="popup__error linkAvatar-input-error"></span>
+            </li>
+          </ul>
+          <button type="submit" class="popup__submit-btn">Сохранить</button>
+          <button type="button" class="popup__close-btn"></button>
+        </fieldset>
+      </form>
+    </div>
+
     <div class="popup popup_card">
       <form name="cardForm" action="#" class="popup__container">
         <h3 class="popup__title">Новое место</h3>

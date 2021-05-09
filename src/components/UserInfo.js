@@ -12,8 +12,10 @@ export default class UserInfo {
     return { userName, userJob }
   }
 
-  setUserInfo({ name, job, userId }) {
+
+  setUserInfo({ name, job, userId, avatarLink }) {
     this.userId = userId;
+    this.avatarLink = avatarLink;
     setTextContent(this._userNameElement, name);
     setTextContent(this._userJobElement, job);
   }

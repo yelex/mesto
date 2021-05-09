@@ -14,7 +14,9 @@ import { profileEditBtn, popupCardSubmitBtn, cardAddBtn,
   popupProfileSelector, popupCardSelector, profileName,
   popupProfileName, profileJob, popupProfileJob,
   formElementsObj, formSettings, initialCards,
-  cardTemplateSelector, popupDeleteSelector }
+  cardTemplateSelector, popupDeleteSelector, popupAvatarSelector,
+  popupAvatarBtn, popupAvatarSubmitBtn, popupProfileSubmitBtn, avatarImgElement,
+  popupDeleteSubmitBtn }
   from "../utils/constants.js";
 import UserInfo from "../components/UserInfo.js";
 import { getIds } from "../utils/utils.js";
@@ -40,7 +42,7 @@ const createCard = ({ title, link, id, likeUserIds, isMyCard }) => {
         promise.then(({ likes }) => {
           const likeUserIds = getIds(likes);
           card.setLikeStatus(likeUserIds);
-        })
+        }).catch(err => console.log(err))
     },
       handleRemoveClick: () => {
         popupWithFormDelete.setSubmitAction(()=>{
@@ -95,17 +97,20 @@ const api = new Api({
 
 api.getAllInitialData().then(args => {
   const [ cards, profileInfo ] = args;
-  userInfo.setUserInfo({ name: profileInfo.name, job: profileInfo.about, userId: profileInfo._id });
+  userInfo.setUserInfo({ name: profileInfo.name, job: profileInfo.about, userId: profileInfo._id, avatarLink: profileInfo.avatar });
+  avatarImgElement.src = userInfo.avatarLink;
+  avatarImgElement.alt = userInfo.name;
   cardList.setItems(cards);
   cardList.renderItems();
-
-})
+}).catch(err => console.log(err))
 
 // подключаем валидацию для всех форм
 const addCardFormValidator = new FormValidator(formSettings, formElementsObj.cardForm);
 const editProfileFormValidator = new FormValidator(formSettings, formElementsObj.profileForm);
+const editAvatarFormValidator = new FormValidator(formSettings, formElementsObj.avatarForm);
 addCardFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();
+editAvatarFormValidator.enableValidation();
 
 const popupWithImage = new PopupWithImage(
   {popupSelector: popupImageSelector,
@@ -117,13 +122,15 @@ const popupWithImage = new PopupWithImage(
 const popupWithFormProfile = new PopupWithForm (
   {popupSelector: popupProfileSelector,
     handleFormSubmit: ({ name, job }) => {
+      popupProfileSubmitBtn.textContent = "Сохранение...";
       api.setInfoAboutMe({ name: name, about: job })
       .then(res => {
         userInfo.setUserInfo({ name: res.name, job: res.about });
         popupWithFormProfile.close();
-      })
+      }).catch(err => console.log(err))
     },
     handleFormOpen: () => {
+      popupProfileSubmitBtn.textContent = "Сохранить";
       editProfileFormValidator.inputElements.forEach(inputElement => {
         editProfileFormValidator.hideInputError(inputElement);
       })
@@ -132,13 +139,41 @@ const popupWithFormProfile = new PopupWithForm (
   }
 )
 
+const popupWithFormAvatar = new PopupWithForm (
+  {popupSelector: popupAvatarSelector,
+    handleFormSubmit: ({ linkAvatar }) => {
+      popupAvatarSubmitBtn.textContent = "Сохранение...";
+      api.addAvatarToApi(linkAvatar)
+       .then(profileInfo => {
+        userInfo.setUserInfo({ name: profileInfo.name, job: profileInfo.about, userId: profileInfo._id, avatarLink: profileInfo.avatar });
+        avatarImgElement.src = userInfo.avatarLink;
+        avatarImgElement.alt = userInfo.name;
+        popupWithFormAvatar.close();
+       })
+       .catch(err => console.log(err))
+
+    },
+    handleFormOpen: () => {
+      popupAvatarSubmitBtn.textContent = "Сохранить";
+      editAvatarFormValidator.inputElements.forEach(inputElement => {
+        editAvatarFormValidator.hideInputError(inputElement);
+      })
+      editAvatarFormValidator.toggleButtonState();
+    }
+  }
+)
+
 const popupWithFormDelete = new PopupWithFormSubmit(
-  { popupSelector: popupDeleteSelector }
+  { popupSelector: popupDeleteSelector, setSubmitBtnText: (text)=>{
+    popupDeleteSubmitBtn.textContent = text
+  }
+}
 )
 
 const popupWithFormCard = new PopupWithForm(
   {popupSelector: popupCardSelector,
     handleFormSubmit: ({ title, link }) => {
+      popupCardSubmitBtn.textContent = "Сохранение..."
       api.addNewCardApi({ title, link })
       .then(_ => {
         return api.getInitialCardsFromApi()
@@ -147,9 +182,10 @@ const popupWithFormCard = new PopupWithForm(
           cardList.setItems(cards);
           cardList.renderItems();
           popupWithFormCard.close();
-        })
+        }).catch(err => console.log(err))
       },
     handleFormOpen: () => {
+      popupCardSubmitBtn.textContent = "Создать"
       addCardFormValidator.inputElements.forEach(inputElement => {
         addCardFormValidator.hideInputError(inputElement);
       })
@@ -160,6 +196,7 @@ const popupWithFormCard = new PopupWithForm(
 popupWithImage.setEventListeners();
 popupWithFormProfile.setEventListeners();
 popupWithFormCard.setEventListeners();
+popupWithFormAvatar.setEventListeners();
 
 profileEditBtn.addEventListener('click', function(){
   const { userName, userJob } = userInfo.getUserInfo();
@@ -172,4 +209,10 @@ cardAddBtn.addEventListener('click', function(){
   popupCardSubmitBtn.disabled = true;
   popupCardSubmitBtn.classList.add('popup__submit-btn_disabled');
   popupWithFormCard.open();
+});
+
+popupAvatarBtn.addEventListener('click', function(){
+  popupAvatarSubmitBtn.disabled = true;
+  popupAvatarSubmitBtn.classList.add('popup__submit-btn_disabled');
+  popupWithFormAvatar.open();
 });

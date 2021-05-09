@@ -1,10 +1,10 @@
 import Popup from "../components/Popup.js";
 
 export default class PopupWithFormSubmit extends Popup {
-  constructor({ popupSelector }) {
+  constructor({ popupSelector, setSubmitBtnText }) {
     super(popupSelector);
-    console.log(this._popup);
     this._form = this._popup.querySelector('form');
+    this._setSubmitBtnText = setSubmitBtnText;
   }
 
   setSubmitAction(submitAction) {
@@ -13,7 +13,13 @@ export default class PopupWithFormSubmit extends Popup {
 
   close() {
     super.close();
+    this._setSubmitBtnText("Сохранение...");
     this.unsetEventListeners();
+  }
+
+  open() {
+    super.open();
+    this._setSubmitBtnText("Да");
   }
 
   setEventListeners() {
