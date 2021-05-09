@@ -13,7 +13,8 @@ export default class Api {
           return res.json();
         }
         return Promise.reject(`Ошибка в получении карточек: ${res.status}`)
-      });
+      })
+      .catch(err => console.log(err))
   }
 
   getInfoAboutMeApi() {
@@ -25,7 +26,8 @@ export default class Api {
           return res.json();
         }
         return Promise.reject(`Ошибка при получении данных профиля: ${res.status}`)
-      });
+      })
+      .catch(err => console.log(err))
   }
 
   setInfoAboutMe({ name, about }) {
@@ -43,7 +45,8 @@ export default class Api {
           return res.json();
         }
         return Promise.reject(`Ошибка при обновлении данных профиля: ${res.status}`)
-      });
+      })
+      .catch(err => console.log(err))
   }
 
   getAllInitialData() {
@@ -64,7 +67,8 @@ export default class Api {
           return res.json();
         }
         return Promise.reject(`Ошибка при редактировании профиля: ${res.status}`)
-      });
+      })
+      .catch(err => console.log(err))
   }
 
   addNewCardApi({ title, link }) {
@@ -81,7 +85,36 @@ export default class Api {
           return res.json();
         }
         return Promise.reject(`Ошибка при добавлении новой карточки: ${res.status}`)
-      });
+      })
+      .catch(err => console.log(err))
+  }
+
+  addLikeToCardApi(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: this._headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка при добавлении лайка: ${res.status}`)
+      })
+      .catch(err => console.log(err))
+  }
+
+  removeLikeToCardApi(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка при удалении лайка: ${res.status}`)
+      })
+      .catch(err => console.log(err))
   }
   // другие методы работы с API
 }

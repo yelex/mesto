@@ -16,11 +16,30 @@ import { profileEditBtn, popupCardSubmitBtn, cardAddBtn,
   cardTemplateSelector }
   from "../utils/constants.js";
 import UserInfo from "../components/UserInfo.js";
+import { getIds } from "../utils/utils.js";
 
-const createCard = ({ title, link }) => {
+const createCard = ({ title, link, id, likeUserIds }) => {
+
   const card = new Card(
-    { title, link, handleCardClick: () => {
-      popupWithImage.open({title, link})
+    { title, link, id, likeUserIds,
+      handleCardClick: () => {
+      popupWithImage.open({title, link})}
+      ,
+      setColorHeart: () => {
+
+      if (card.likeUserIds.includes(userInfo.userId)) {
+        card.setActiveHeart(true)
+      } else {
+        card.setActiveHeart(false)
+      }}
+      ,
+      handleLikeClick: () => {
+
+        const promise = card.likeUserIds.includes(userInfo.userId) ? api.removeLikeToCardApi(card.id) : api.addLikeToCardApi(card.id)
+        promise.then(({ likes }) => {
+          const likeUserIds = getIds(likes);
+          card.setLikeStatus(likeUserIds);
+        })
     }
     },
     cardTemplateSelector,
@@ -34,8 +53,9 @@ const addCardToCardList = (cardElement, cardList) =>{
 }
 
 const cardList = new Section({
-  renderer: ({ name, link }) => {
-    const newCard = createCard({title: name, link});
+  renderer: ({ name, link, _id, likes }) => {
+    const likeUserIds = getIds(likes);
+    const newCard = createCard({title: name, link, id: _id, likeUserIds});
     addCardToCardList(newCard, cardList);
   }},
   cardListSelector
@@ -56,9 +76,10 @@ const api = new Api({
 
 api.getAllInitialData().then(args => {
   const [ cards, profileInfo ] = args;
+  userInfo.setUserInfo({ name: profileInfo.name, job: profileInfo.about, userId: profileInfo._id });
   cardList.setItems(cards);
   cardList.renderItems();
-  userInfo.setUserInfo({ name: profileInfo.name, job: profileInfo.about});
+
 })
 
 // подключаем валидацию для всех форм
