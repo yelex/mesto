@@ -4,30 +4,25 @@ export default class Api {
     this._headers = headers;
   }
 
+  _getResponseData(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`)
+  }
+
   getInitialCardsFromApi() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка в получении карточек: ${res.status}`)
-      })
-      .catch(err => console.log(err))
+      .then(res => this._getResponseData(res))
   }
 
   getInfoAboutMeApi() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка при получении данных профиля: ${res.status}`)
-      })
-      .catch(err => console.log(err))
+      .then(res => this._getResponseData(res))
   }
 
   setInfoAboutMe({ name, about }) {
@@ -40,13 +35,7 @@ export default class Api {
         about: about
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка при обновлении данных профиля: ${res.status}`)
-      })
-      .catch(err => console.log(err))
+      .then(res => this._getResponseData(res))
   }
 
   getAllInitialData() {
@@ -62,13 +51,7 @@ export default class Api {
         about
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка при редактировании профиля: ${res.status}`)
-      })
-      .catch(err => console.log(err))
+    .then(res => this._getResponseData(res))
   }
 
   addNewCardApi({ title, link }) {
@@ -80,13 +63,7 @@ export default class Api {
         link: link
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка при добавлении новой карточки: ${res.status}`)
-      })
-      .catch(err => console.log(err))
+      .then(res => this._getResponseData(res))
   }
 
   removeCardApi(cardId) {
@@ -94,13 +71,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка при удалении карточки: ${res.status}`)
-      })
-      .catch(err => console.log(err))
+      .then(res => this._getResponseData(res))
   }
 
   addLikeToCardApi(cardId) {
@@ -108,13 +79,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка при добавлении лайка: ${res.status}`)
-      })
-      .catch(err => console.log(err))
+      .then(res => this._getResponseData(res))
   }
 
   addAvatarToApi(avatarLink) {
@@ -125,13 +90,7 @@ export default class Api {
         avatar: avatarLink
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка при добавлении аватара: ${res.status}`)
-      })
-      .catch(err => console.log(err))
+      .then(res => this._getResponseData(res))
   }
 
   removeLikeToCardApi(cardId) {
@@ -139,13 +98,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка при удалении лайка: ${res.status}`)
-      })
-      .catch(err => console.log(err))
+      .then(res => this._getResponseData(res))
   }
   // другие методы работы с API
 }
