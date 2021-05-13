@@ -58,7 +58,7 @@ const popupWithFormAvatar = new PopupWithForm (
         popupWithFormAvatar.close();
        })
        .catch(err => console.log(err))
-       .finally(_ => popupWithFormAvatar.textContent = "Сохранить")
+       .finally(_ => popupAvatarSubmitBtn.textContent = "Сохранить")
 
     },
     handleFormOpen: () => {
