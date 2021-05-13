@@ -51,6 +51,11 @@ export default class Card {
     this._renderLikeNumber(this.likeUserIds.length);
   }
 
+  removeCard() {
+    console.log('and here')
+    this._element.closest('.card').remove();
+  }
+
   generateCard() {
     this._element = this._getTemplate();
     this._heartIco = this._element.querySelector('.card__heart-ico');

@@ -21,97 +21,6 @@ import { profileEditBtn, popupCardSubmitBtn, cardAddBtn,
 import UserInfo from "../components/UserInfo.js";
 import { getIds } from "../utils/utils.js";
 
-const createCard = ({ title, link, id, likeUserIds, isMyCard }) => {
-
-  const card = new Card(
-    { title, link, id, likeUserIds,
-      handleCardClick: () => {
-      popupWithImage.open({title, link})}
-      ,
-      setColorHeart: () => {
-
-      if (card.likeUserIds.includes(userInfo.userId)) {
-        card.setActiveHeart(true)
-      } else {
-        card.setActiveHeart(false)
-      }}
-      ,
-      handleLikeClick: () => {
-
-        const promise = card.likeUserIds.includes(userInfo.userId) ? api.removeLikeToCardApi(card.id) : api.addLikeToCardApi(card.id)
-        promise.then(({ likes }) => {
-          const likeUserIds = getIds(likes);
-          card.setLikeStatus(likeUserIds);
-        }).catch(err => console.log(err))
-    },
-      handleRemoveClick: () => {
-        popupWithFormDelete.setSubmitAction(()=>{
-          api.removeCardApi(card.id)
-          .then(_ => {
-            return api.getInitialCardsFromApi()
-          })
-          .then(cards => {
-            cardList.setItems(cards);
-            cardList.renderItems();
-          }).then(_ => {popupWithFormDelete.close()})
-          .catch(err => console.error(err))
-
-        })
-        popupWithFormDelete.open();
-        popupWithFormDelete.setEventListeners();
-      },
-      isMyCard
-    },
-    cardTemplateSelector,
-    );
-  const cardElement = card.generateCard();
-  return cardElement
-}
-
-const addCardToCardList = (cardElement, cardList) =>{
-  cardList.addItem(cardElement);
-}
-
-const cardList = new Section({
-  renderer: ({ name, link, _id, likes, owner }) => {
-    const likeUserIds = getIds(likes);
-    const isMyCard = owner._id === userInfo.userId ? true : false
-    const newCard = createCard({title: name, link, id: _id, likeUserIds, isMyCard});
-    addCardToCardList(newCard, cardList);
-  }},
-  cardListSelector
-);
-
-const userInfo = new UserInfo({
-  userNameSelector: userNameSelector,
-  userJobSelector: userJobSelector
-})
-
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-23',
-  headers: {
-    authorization: '58d9bd2a-6b34-4d93-8ca3-98d968550c4e',
-    'Content-Type': 'application/json'
-  }
-});
-
-api.getAllInitialData().then(args => {
-  const [ cards, profileInfo ] = args;
-  userInfo.setUserInfo({ name: profileInfo.name, job: profileInfo.about, userId: profileInfo._id, avatarLink: profileInfo.avatar });
-  avatarImgElement.src = userInfo.avatarLink;
-  avatarImgElement.alt = userInfo.name;
-  cardList.setItems(cards);
-  cardList.renderItems();
-}).catch(err => console.log(err))
-
-// подключаем валидацию для всех форм
-const addCardFormValidator = new FormValidator(formSettings, formElementsObj.cardForm);
-const editProfileFormValidator = new FormValidator(formSettings, formElementsObj.profileForm);
-const editAvatarFormValidator = new FormValidator(formSettings, formElementsObj.avatarForm);
-addCardFormValidator.enableValidation();
-editProfileFormValidator.enableValidation();
-editAvatarFormValidator.enableValidation();
-
 const popupWithImage = new PopupWithImage(
   {popupSelector: popupImageSelector,
     imageSelector: imageSelector,
@@ -175,14 +84,16 @@ const popupWithFormCard = new PopupWithForm(
     handleFormSubmit: ({ title, link }) => {
       popupCardSubmitBtn.textContent = "Сохранение..."
       api.addNewCardApi({ title, link })
-      .then(_ => {
-        return api.getInitialCardsFromApi()
-      })
-        .then(cards => {
-          cardList.setItems(cards);
-          cardList.renderItems();
-          popupWithFormCard.close();
-        }).catch(err => console.log(err))
+      .then(({ name, link, _id }) => {
+          console.log({ name, link, _id })
+          const likeUserIds = [];
+          const isMyCard = true;
+          const newCard = createCard({title: name, link, id: _id, likeUserIds, isMyCard});
+          cardList.addItem(newCard);
+          // cardList.renderItems();
+          popupWithFormCard.close()
+        })
+        .catch(err => console.log(err))
       },
     handleFormOpen: () => {
       popupCardSubmitBtn.textContent = "Создать"
@@ -193,10 +104,102 @@ const popupWithFormCard = new PopupWithForm(
     }
   }
 )
+popupWithFormDelete.setEventListeners();
 popupWithImage.setEventListeners();
 popupWithFormProfile.setEventListeners();
 popupWithFormCard.setEventListeners();
 popupWithFormAvatar.setEventListeners();
+
+const createCard = ({ title, link, id, likeUserIds, isMyCard }) => {
+
+  const card = new Card(
+    { title, link, id, likeUserIds,
+      handleCardClick: () => {
+      popupWithImage.open({title, link})}
+      ,
+      setColorHeart: () => {
+
+      if (card.likeUserIds.includes(userInfo.userId)) {
+        card.setActiveHeart(true)
+      } else {
+        card.setActiveHeart(false)
+      }}
+      ,
+      handleLikeClick: () => {
+
+        const promise = card.likeUserIds.includes(userInfo.userId) ? api.removeLikeToCardApi(card.id) : api.addLikeToCardApi(card.id)
+        promise.then(({ likes }) => {
+          const likeUserIds = getIds(likes);
+          card.setLikeStatus(likeUserIds);
+        }).catch(err => console.log(err))
+    },
+      handleRemoveClick: () => {
+        popupWithFormDelete.setSubmitAction(()=>{
+          api.removeCardApi(card.id)
+          .then(_ => {
+            card.removeCard();
+            popupWithFormDelete.close();
+          })
+          .catch(err => console.error(err))
+
+        })
+
+        popupWithFormDelete.open();
+
+      },
+      isMyCard
+    },
+    cardTemplateSelector,
+    );
+  const cardElement = card.generateCard();
+  return cardElement
+}
+
+const addCardToCardList = (cardElement, cardList) =>{
+  cardList.addItem(cardElement);
+}
+
+const cardList = new Section({
+  renderer: ({ name, link, _id, likes, owner }) => {
+    const likeUserIds = getIds(likes);
+    const isMyCard = owner._id === userInfo.userId ? true : false
+    const newCard = createCard({title: name, link, id: _id, likeUserIds, isMyCard});
+    addCardToCardList(newCard, cardList);
+  }},
+  cardListSelector
+);
+
+const userInfo = new UserInfo({
+  userNameSelector: userNameSelector,
+  userJobSelector: userJobSelector
+})
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-23',
+  headers: {
+    authorization: '58d9bd2a-6b34-4d93-8ca3-98d968550c4e',
+    'Content-Type': 'application/json'
+  }
+});
+
+api.getAllInitialData().then(args => {
+  const [ cards, profileInfo ] = args;
+  userInfo.setUserInfo({ name: profileInfo.name, job: profileInfo.about, userId: profileInfo._id, avatarLink: profileInfo.avatar });
+  avatarImgElement.src = userInfo.avatarLink;
+  avatarImgElement.alt = userInfo.name;
+  cardList.setItems(cards);
+  cardList.renderItems();
+}).catch(err => console.log(err))
+
+// подключаем валидацию для всех форм
+const addCardFormValidator = new FormValidator(formSettings, formElementsObj.cardForm);
+const editProfileFormValidator = new FormValidator(formSettings, formElementsObj.profileForm);
+const editAvatarFormValidator = new FormValidator(formSettings, formElementsObj.avatarForm);
+addCardFormValidator.enableValidation();
+editProfileFormValidator.enableValidation();
+editAvatarFormValidator.enableValidation();
+
+
 
 profileEditBtn.addEventListener('click', function(){
   const { userName, userJob } = userInfo.getUserInfo();
