@@ -36,14 +36,12 @@ const popupWithFormProfile = new PopupWithForm (
       .then(res => {
         userInfo.setUserInfo({ name: res.name, job: res.about });
         popupWithFormProfile.close();
-      }).catch(err => console.log(err))
+      })
+      .catch(err => console.log(err))
+      .finally(_ => popupProfileSubmitBtn.textContent = "Сохранить")
     },
     handleFormOpen: () => {
-      popupProfileSubmitBtn.textContent = "Сохранить";
-      editProfileFormValidator.inputElements.forEach(inputElement => {
-        editProfileFormValidator.hideInputError(inputElement);
-      })
-      editProfileFormValidator.toggleButtonState();
+      setValidator(editProfileFormValidator);
     }
   }
 )
@@ -60,14 +58,11 @@ const popupWithFormAvatar = new PopupWithForm (
         popupWithFormAvatar.close();
        })
        .catch(err => console.log(err))
+       .finally(_ => popupWithFormAvatar.textContent = "Сохранить")
 
     },
     handleFormOpen: () => {
-      popupAvatarSubmitBtn.textContent = "Сохранить";
-      editAvatarFormValidator.inputElements.forEach(inputElement => {
-        editAvatarFormValidator.hideInputError(inputElement);
-      })
-      editAvatarFormValidator.toggleButtonState();
+      setValidator(editAvatarFormValidator);
     }
   }
 )
@@ -85,22 +80,18 @@ const popupWithFormCard = new PopupWithForm(
       popupCardSubmitBtn.textContent = "Сохранение..."
       api.addNewCardApi({ title, link })
       .then(({ name, link, _id }) => {
-          console.log({ name, link, _id })
+
           const likeUserIds = [];
           const isMyCard = true;
           const newCard = createCard({title: name, link, id: _id, likeUserIds, isMyCard});
           cardList.addItem(newCard);
-          // cardList.renderItems();
           popupWithFormCard.close()
         })
         .catch(err => console.log(err))
+        .finally(_ => popupCardSubmitBtn.textContent = "Создать")
       },
     handleFormOpen: () => {
-      popupCardSubmitBtn.textContent = "Создать"
-      addCardFormValidator.inputElements.forEach(inputElement => {
-        addCardFormValidator.hideInputError(inputElement);
-      })
-      addCardFormValidator.toggleButtonState();
+      setValidator(addCardFormValidator);
     }
   }
 )
@@ -123,8 +114,7 @@ const createCard = ({ title, link, id, likeUserIds, isMyCard }) => {
         card.setActiveHeart(true)
       } else {
         card.setActiveHeart(false)
-      }}
-      ,
+      }},
       handleLikeClick: () => {
 
         const promise = card.likeUserIds.includes(userInfo.userId) ? api.removeLikeToCardApi(card.id) : api.addLikeToCardApi(card.id)
@@ -132,7 +122,7 @@ const createCard = ({ title, link, id, likeUserIds, isMyCard }) => {
           const likeUserIds = getIds(likes);
           card.setLikeStatus(likeUserIds);
         }).catch(err => console.log(err))
-    },
+        },
       handleRemoveClick: () => {
         popupWithFormDelete.setSubmitAction(()=>{
           api.removeCardApi(card.id)
@@ -141,11 +131,8 @@ const createCard = ({ title, link, id, likeUserIds, isMyCard }) => {
             popupWithFormDelete.close();
           })
           .catch(err => console.error(err))
-
         })
-
         popupWithFormDelete.open();
-
       },
       isMyCard
     },
@@ -157,6 +144,13 @@ const createCard = ({ title, link, id, likeUserIds, isMyCard }) => {
 
 const addCardToCardList = (cardElement, cardList) =>{
   cardList.addItem(cardElement);
+}
+
+const setValidator = (validator) =>{
+  validator.inputElements.forEach(inputElement => {
+    validator.hideInputError(inputElement);
+  })
+  validator.toggleButtonState();;
 }
 
 const cardList = new Section({
@@ -182,23 +176,24 @@ const api = new Api({
   }
 });
 
-api.getAllInitialData().then(args => {
+api.getAllInitialData()
+  .then(args => {
   const [ cards, profileInfo ] = args;
   userInfo.setUserInfo({ name: profileInfo.name, job: profileInfo.about, userId: profileInfo._id, avatarLink: profileInfo.avatar });
   avatarImgElement.src = userInfo.avatarLink;
   avatarImgElement.alt = userInfo.name;
   cardList.setItems(cards);
   cardList.renderItems();
-}).catch(err => console.log(err))
+  })
+  .catch(err => console.log(err))
 
-// подключаем валидацию для всех форм
+
 const addCardFormValidator = new FormValidator(formSettings, formElementsObj.cardForm);
 const editProfileFormValidator = new FormValidator(formSettings, formElementsObj.profileForm);
 const editAvatarFormValidator = new FormValidator(formSettings, formElementsObj.avatarForm);
 addCardFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();
 editAvatarFormValidator.enableValidation();
-
 
 
 profileEditBtn.addEventListener('click', function(){

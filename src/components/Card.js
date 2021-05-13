@@ -52,7 +52,6 @@ export default class Card {
   }
 
   removeCard() {
-    console.log('and here')
     this._element.closest('.card').remove();
   }
 
