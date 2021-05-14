@@ -8,4 +8,4 @@
 - методология БЭМ
 - сборка проектов Webpack
 
-[Ссылка на сайт](https://yelex.github.io/mesto/)
+[Демо](https://yelex.github.io/mesto/)
